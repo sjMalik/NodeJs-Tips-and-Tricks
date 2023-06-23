@@ -2,6 +2,7 @@
 1. [Ddos/Brute Force Attcack and Prevent in Nodejs](#ddosbrute-force-attcack-and-prevent-in-nodejs)
 2. [How do you secure the API?](#how-do-you-secure-the-api)
 3. [SSL Certificate, Generate Locally and Use in Node Server](#what-is-an-ssl-certificate)
+4. [Express File Upload](#file-upload)
 
 ## [Ddos/Brute Force Attcack and Prevent in Nodejs](https://www.youtube.com/watch?v=TtPsUq09OZU&list=PLdHg5T0SNpN2c0j8ggRFUU4iRxVznozWt&index=1&ab_channel=MafiaCodes)
 In a DDoS attack, the attacker tries to make a particular service unavailable by directing continuous and huge traffic from multiple end systems. Due to this enormous traffic, the network resources get utilized in serving requests of those false end systems such that, a legitimate user is unable to access the resources for himself/herself. 
@@ -95,6 +96,23 @@ app.use(fileUpload({
 app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
 }));
+```
+
+## [Response Compression](https://www.npmjs.com/package/compression)
+* level - The level of zlib compression to apply to responses. A higher level will result in better compression, but will take longer to complete. A lower level will result in less compression, but will be much faster.
+* threshold - The byte threshold for the response body size before compression is considered for the response, defaults to 1kb. This is a number of bytes or any string accepted by the bytes module.
+* filter the compression based on condition
+```
+app.use(compression({
+    level: 6,
+    threshold: 100 * 1024,
+    filter: (req, res)=> {
+        if(req.headers['x-no-compression']){
+            return false;
+        }
+        return compression.filter(req, res)
+    }
+}))
 ```
 
 ## VS Code Shortcuts
