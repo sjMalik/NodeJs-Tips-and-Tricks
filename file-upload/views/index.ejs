@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Uplaod</title>
+    <style>
+        body {
+            display:grid;
+            place-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>File Upload</h1>
+
+    <form action="/single" method="post" enctype="multipart/form-data">
+        <input type="file" name="mfile" id="mfile" accept="image/jpeg, image/png, image/svg+xml, application/pdf" required />
+        <button type="submit">Upload</button>
+    </form>
+
+    <h1>Multiple File Upload</h1>
+    <form action="/multiple" method="post" enctype="multipart/form-data">
+        <input type="file" name="mfiles" id="mfiles" required multiple />
+        <button type="submit">Uplaod</button>
+    </form>
+</body>
+</html>

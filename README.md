@@ -20,7 +20,7 @@ Captcha/Re-Captcha
 
 Rate Limiter/Incremental Delay/Request Throttling
 
-[Back to Contents ⬆️](#contents)
+[⬆️ Back to Contents](#contents)
 
 ## [What is an SSL certificate?](https://www.cloudflare.com/learning/ssl/what-is-an-ssl-certificate/)
 SSL, more commonly called TLS, is a protocol for encrypting Internet traffic and verifying server identity.
@@ -54,5 +54,49 @@ const sslServer = http.createServer({
 sslServer.listen(3443, ()=> console.log('Secure server 🚀🔐 listening on port 3443'));
 ```
 
-[Back to Contents ⬆️](#contents)
+[⬆️ Back to Contents](#contents)
+
+## [File Upload](https://www.npmjs.com/package/express-fileupload)
+Dont save the file with the name which user send, there may be case that two different file has same name and in this case the old file will be overwritten.
+file instance
+```
+{
+  name: 'CRUD Swagger APIs.png',
+  data: <Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 07 67 00 00 03 10 08 06 00 00 00 13 b5 6e 9e 00 00 00 01 73 52 47 42 00 ae ce 1c e9 00 00 00 04 ... 70918 more bytes>,
+  size: 70968,
+  encoding: '7bit',
+  tempFilePath: '', // Store the file temporarily
+  truncated: false, // It will be true if there is limit of file size
+  mimetype: 'image/png',
+  md5: 'fe3e7187a7202484726f8111d2f48db7',
+  mv: [Function: mv]
+}
+```
+
+Using useTempFile Options: 
+Use temp files instead of memory for managing the upload process.
+```
+// Note that this option available for versions 1.0.0 and newer. 
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : '/tmp/'
+}));
+```
+
+createParentPath: 
+Automatically creates the directory path specified in .mv(filePathName)
+```
+app.use(fileUpload({
+    createParentPath : true,
+}));
+```
+50 mb limit
+```
+app.use(fileUpload({
+  limits: { fileSize: 50 * 1024 * 1024 },
+}));
+```
+
+## VS Code Shortcuts
+1. To generate a skeleton of HTML press ! and enter
 
