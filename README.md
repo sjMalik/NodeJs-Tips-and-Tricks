@@ -115,6 +115,64 @@ app.use(compression({
 }))
 ```
 
+## [HTTP Cookies](https://www.geeksforgeeks.org/http-cookies/)
+Cookie in simpler terms means just the textual information about some website. When you visit a particular website, some information is saved in your local system so that when you visit the same website again, this website is able to recognize you and show you the results according to your preferences. Cookies have been long used in the internet history and have developed in a magnificent way. 
+
+When you visit a website you actually requests the web page from the server. For a server, every request is a unique request. So if you visit hundred times, the server will consider each and every request unique. Since the intensity of requests that arrive at a server is high, it is obvious and logical not to store every user’s information to the server. Maybe you never visit again and the same information will be redundant. So, to uniquely remember you, the server sends the cookies along with the response which is saved in your local machine. Now the next time you hit the same server, you will get a response according to you as the server will recognize you.
+
+[Other Reference](https://github.com/sjMalik/node-express-postgres-auth#authentication)
+
+### cookie-parser
+This module is used for handling the cookies
+
+---
+
+**Cookie Helper**
+
+```
+const cookieParser = require('cookie-parser')
+
+app.get('/set-cookie', (req, res)=> {
+    res.cookie('foo', 'bar', {
+        maxAge: 5000,   // the cookie valid for 5 sec
+        expires: new Date('1st January 2100'),
+        httpOnly: true,
+        secure: true,
+        domain: 'example.com'
+    })
+});
+```
+
+- **`httponly`**
+
+  > When this attribute is set, client-side scripts(e.g. document.cookies() etc.) are not allowed to access the cookie. Now, the question that arises is, 'Why do I need to safeguard my cookies from client-side scripts?'
+  > <br><br> _The short answer_: **XSS** <br> _The long answer_: Cross Site Scripting attacks can be used to steal cookies with the help of client-side scripts.
+  > <br><br>
+  > Restricting access to cookies by client-side scripts does not completely mitigate the risk of stealing cookies via XSS. However, it does raise the bar considerably and ensures that the most common XSS attack is mitigated, though not completely.
+
+- **`secure`**
+
+  > The _Secure_ attribute makes sure that the cookie will only be sent with requests made over an encrypted connection and an attacker won't be able to steal cookies by sniffing. If this flag is true then you can set cookie only if you have https connection
+
+- **`maxAge`**
+
+  > This attribute is used to set persistent cookies. It signifies how long the browser should use the persistent cookie and when the cookie should be deleted.
+  > <br><br>
+  > If this attribute is not specified, then the lifetime of the cookie is the same as that of browser session, i.e. it will be a non-persistent cookie.
+
+- **`expires`**
+
+  > Same as `maxAge`, but expiration date is provided instead of time to expire.
+
+- **`domain`**
+
+  > The _domain_ attribute signifies the domain for which the cookie is valid and can be submitted with every request for this domain or its subdomains. If this attribute is not specified, then the hostname of the originating server is used as the default value.
+
+- **`path`**
+  > The _path_ attribute signifies the URL or path for which the cookie is valid. The default path attribute is set as '/'.
+
+---
+
 ## VS Code Shortcuts
 1. To generate a skeleton of HTML press ! and enter
 
