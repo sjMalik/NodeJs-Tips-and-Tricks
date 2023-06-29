@@ -3,7 +3,7 @@
 2. [How do you secure the API?](#how-do-you-secure-the-api)
 3. [SSL Certificate, Generate Locally and Use in Node Server](#what-is-an-ssl-certificate)
 4. [Express File Upload](#file-upload)
-5. [Scaffolding Express Project](#scaffolding-node-express-project)
+5. [Scaffolding Express Project with knex, pg, mocha, eslint](#scaffolding-node-express-project)
 
 ## [Ddos/Brute Force Attcack and Prevent in Nodejs](https://www.youtube.com/watch?v=TtPsUq09OZU&list=PLdHg5T0SNpN2c0j8ggRFUU4iRxVznozWt&index=1&ab_channel=MafiaCodes)
 In a DDoS attack, the attacker tries to make a particular service unavailable by directing continuous and huge traffic from multiple end systems. Due to this enormous traffic, the network resources get utilized in serving requests of those false end systems such that, a legitimate user is unable to access the resources for himself/herself. 
@@ -223,6 +223,67 @@ app.get('/set-cookie', (req, res)=> {
         ```
         npm run lint
         npm run lint-fix
+        ```
+8. Database: Postgres - Initialize knex project
+    - Install knex and pg
+        ```
+        npm i knex pg
+        ```
+    - Create knexfile.js
+        ```
+        knex init
+        ```
+    - Create migration and seed file
+        ```
+        knex migrate:make <file-name>
+        knex seed:make <file-name>
+        ```
+    - Migrate and seed databse
+        ```
+        knex migrate:latest
+        knex seed:run
+        ```
+    - `knexfile.js`
+      ```
+      module.exports = {
+        development: {
+          client: 'pg',
+          connection: 'postgres://postgres:mysecretpassword@localhost/express_crud',
+        },
+        test: {
+          client: 'pg',
+          connection: 'postgres://postgres:mysecretpassword@localhost/test_express_crud',
+        },
+      };
+      ```
+    - db/knex.js
+      ```
+      const environment = process.env.NODE_ENV || 'development';
+      const knex = require('knex');
+      const config = require('../knexfile');
+
+      const environmentConfig = config[environment];
+
+      const connection = knex(environmentConfig);
+
+      module.exports = connection;
+      ```
+9. Setup tests
+    * Install mocha, chai and supertest
+      - npm i -D mocha chai supertest
+    * Add a test database connection
+    * Add npm test script in `package.json`
+      ```
+      "test": "(dropdb --if-exists --username=postgres test_express_crud && createdb --username=postgres test_express_crud) && NODE_ENV=test mocha",
+      ```
+    * Create before
+      * Run migrations/seeds on test db
+        ```
+        before((done)=> {
+          knex.migrate.latest().then(()=> {
+              return knex.seed.run()
+          }).then(()=> done())
+        });
         ```
 
 ## VS Code Shortcuts
