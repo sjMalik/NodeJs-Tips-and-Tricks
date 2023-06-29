@@ -3,6 +3,7 @@
 2. [How do you secure the API?](#how-do-you-secure-the-api)
 3. [SSL Certificate, Generate Locally and Use in Node Server](#what-is-an-ssl-certificate)
 4. [Express File Upload](#file-upload)
+5. [Scaffolding Express Project](#scaffolding-node-express-project)
 
 ## [Ddos/Brute Force Attcack and Prevent in Nodejs](https://www.youtube.com/watch?v=TtPsUq09OZU&list=PLdHg5T0SNpN2c0j8ggRFUU4iRxVznozWt&index=1&ab_channel=MafiaCodes)
 In a DDoS attack, the attacker tries to make a particular service unavailable by directing continuous and huge traffic from multiple end systems. Due to this enormous traffic, the network resources get utilized in serving requests of those false end systems such that, a legitimate user is unable to access the resources for himself/herself. 
@@ -172,6 +173,57 @@ app.get('/set-cookie', (req, res)=> {
   > The _path_ attribute signifies the URL or path for which the cookie is valid. The default path attribute is set as '/'.
 
 ---
+
+## Scaffolding node-express project
+1. mkdir express-template; cd express-template
+2. express
+3. run `SET DEBUG=express-template:* & npm start`
+4. gitignore node
+5. Convert Express App to JSON API
+    - Remove view rendering
+    - Remove the routes folder
+    - Remove static serve and public folder
+    - Update error handler in `app.js`
+    ```
+        // error handler
+        app.use((err, req, res) => {
+            // render the error page
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: req.app.get('env') === 'development' ? err : {},
+            });
+        });
+    ```
+6. structure
+    ```
+    server
+        |- api
+        |---|- router file
+        |- db
+        |---|- connection and queries
+        |- lib
+        |---|- validation and error handler
+    ```
+7. Set eslinter in your node project
+    - Step 1. Add eslint npm package as a development dependency.
+        ```
+        npm install eslint --save-dev
+        ```
+    - Step 2. Run eslint init and follow the wizard
+        ```
+        ./node_modules/.bin/eslint --init
+        ```
+    - Step 3. Add npm scripts
+        ```
+        "lint": "eslint .  --ext .js",
+        "lint-fix": "eslint --fix .  --ext .js"
+        ```
+    - lint or fix
+        ```
+        npm run lint
+        npm run lint-fix
+        ```
 
 ## VS Code Shortcuts
 1. To generate a skeleton of HTML press ! and enter
