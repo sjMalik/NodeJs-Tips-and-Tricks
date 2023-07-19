@@ -3,7 +3,9 @@
 2. [How do you secure the API?](#how-do-you-secure-the-api)
 3. [SSL Certificate, Generate Locally and Use in Node Server](#what-is-an-ssl-certificate)
 4. [Express File Upload](#file-upload)
-5. [Scaffolding Express Project with knex, pg, mocha, eslint](#scaffolding-node-express-project)
+5. [Response Compression](#response-compression)
+6. [HTTP Cookies](#http-cookies)
+7. [Scaffolding Express Project with knex, pg, mocha, eslint](#scaffolding-node-express-project)
 
 ## [Ddos/Brute Force Attcack and Prevent in Nodejs](https://www.youtube.com/watch?v=TtPsUq09OZU&list=PLdHg5T0SNpN2c0j8ggRFUU4iRxVznozWt&index=1&ab_channel=MafiaCodes)
 In a DDoS attack, the attacker tries to make a particular service unavailable by directing continuous and huge traffic from multiple end systems. Due to this enormous traffic, the network resources get utilized in serving requests of those false end systems such that, a legitimate user is unable to access the resources for himself/herself. 
@@ -116,6 +118,14 @@ app.use(compression({
 }))
 ```
 
+**Response with Compression**
+![](./images/Response-with-compression.png)
+
+**Response without Compression**
+![](./images/Response-without-compression.png)
+
+[⬆️ Back to Contents](#contents)
+
 ## [HTTP Cookies](https://www.geeksforgeeks.org/http-cookies/)
 Cookie in simpler terms means just the textual information about some website. When you visit a particular website, some information is saved in your local system so that when you visit the same website again, this website is able to recognize you and show you the results according to your preferences. Cookies have been long used in the internet history and have developed in a magnificent way. 
 
@@ -173,6 +183,8 @@ app.get('/set-cookie', (req, res)=> {
   > The _path_ attribute signifies the URL or path for which the cookie is valid. The default path attribute is set as '/'.
 
 ---
+
+[⬆️ Back to Contents](#contents)
 
 ## Scaffolding node-express project
 1. mkdir express-template; cd express-template
